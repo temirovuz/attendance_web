@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Home
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row my-4">
+      <div class="col-12 col-md-4 d-flex justify-content-center mb-2">
+        <div class="btn-group w-100">
+          <button id="dashboardDropdown" type="button" class="btn btn-success dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false">Ishilar bo'limi</button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="{% url 'create_employee' %}">Yamgi ishchi qo'shish</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'employee_list' %}">Ishchilar ro'yxati</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4 d-flex justify-content-center mb-2">
+        <div class="btn-group w-100">
+          <button type="button" class="btn btn-info dropdown-toggle w-100" data-bs-toggle="dropdown">Maxsulotlar bo'limi</button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="{% url 'create_product' %}">Yangi Maxsulot qo'shish</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'product_list' %}">Maxsulotlar ro'yxati</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4 d-flex justify-content-center mb-2">
+        <div class="btn-group w-100">
+          <button type="button" class="btn btn-warning dropdown-toggle w-100" data-bs-toggle="dropdown">Kunlik chiqarilgan Maxsulotlar</button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="{% url 'create_product_daily' %}">Kunlik Maxsulot qo'shish</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'product_daily_list' %}">Kunlik Maxsulotlar ro'yxati</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row my-4">
+      <div class="col-12 col-md-4 d-flex justify-content-center mb-2">
+        <div class="btn-group w-100">
+          <button type="button" class="btn btn-success dropdown-toggle w-100" data-bs-toggle="dropdown">Ishchilar Davomati</button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="{% url 'checkin' %}">Ishga kirish</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'checkout' %}">Ishga tugashi</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4 d-flex justify-content-center mb-2">
+        <a href="{% url 'calculate_salary' %}" class="btn btn-primary w-100">Ish haqqini hisoblash</a>
+      </div>
+
+      <div class="col-12 col-md-4 d-flex justify-content-center mb-2">
+        <a href="{% url 'search_employee' %}" class="btn btn-warning w-100">Tannafus berish</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}
+  Salary amount
+{% endblock %}
+
+{% block content %}
+  {% csrf_token %}
+  <div class="container mt-5">
+    <h1 class="text-center">Salary List</h1>
+    <div class="alert alert-primary" role="alert">
+      Boshlanish sanasi: {{ informations.start_date }}
+    </div>
+    <div class="alert alert-danger" role="alert">
+      Tugash sanasi: {{ informations.end_date }}
+    </div>
+    <div class="alert alert-dark" role="alert">
+      Ishchilarga tolanadigan summa : {{ informations.total_amount|floatformat:0|intcomma }} so'm
+    </div>
+    <p></p>
+    <p></p>
+    <p></p>
+
+    <table class="table table-striped table-inverse table-responsive">
+      <thead class="thead-inverse">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Ishlagan soati</th>
+          <th>Kelgan kunlari</th>
+          <th>Salary Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for salary in informations.employees %}
+          <tr>
+            <td scope="row">{{ forloop.counter }}</td>
+            <td>{{ salary.employee_name }}</td>
+            <td>{{ salary.total_hours }}</td>
+            <td>{{ salary.work_days }}</td>
+            <td>{{ salary.total_salary|floatformat:0|intcomma }} so'm</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Check out
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1>Check Out</h1>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group">{{ form.check_out }}</div>
+
+      <table class="table table-striped table-dark">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Employee Name</th>
+            <th>Check</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for attendance in employees %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ attendance.employee.name }}</td>
+              <td>
+                <div class="form-check">
+                  <input type="checkbox" name="employees" value="{{ attendance.employee.id }}" id="employee_{{ attendance.employee.id }}" class="form-check-input" />
+                  <label class="form-check-label" for="employee_{{ attendance.employee.id }}"></label>
+                </div>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="3">No pending check-outs.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <button type="submit" class="btn btn-primary">Check Out</button>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Xodimning tanaffus vaqti{% endblock title %}
+
+{% block content %}
+
+
+<div class="container">
+    
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    
+</div>
+
+
+{% endblock %}

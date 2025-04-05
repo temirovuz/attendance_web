@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Salary Computation
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1 class="text-center">Salary Computation</h1>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_table }}
+    </form>
+  </div>
+{% endblock %}

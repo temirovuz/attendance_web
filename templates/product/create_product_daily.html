@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %} Product daily{% endblock title %}
+
+{% block content %}
+
+<h1>Create Product daily </h1>
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label for="id_product">Product:</label>
+        <select name="product" id="product">
+            {% for product in products %}   
+                <option value="{{ product.id }}">{{ product.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div>
+        <label for="id_date">Date:</label>
+        <input type="date" name="date" id="date">
+    </div>
+    <div>
+        <label for="id_quantity">Quantity:</label>
+        <input type="number" name="quantity" id="quantity">
+    </div>
+    <button type="submit">Submit</button>
+</form>
+{% endblock content %}

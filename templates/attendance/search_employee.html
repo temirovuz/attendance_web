@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Filter employee{% endblock title %}
+
+
+
+{% block content %}
+
+<form id="employee-form" method="POST" class="p-4 border rounded shadow-sm bg-light">
+    {% csrf_token %}
+    <input type="hidden" name="employee_id" id="employee-id" />
+  
+    <div class="mb-3">
+        <label for="search-input" class="form-label">Xodim ismini yozing</label>
+        <input type="text" id="search-input" class="form-control" placeholder="Xodim ismini yozing..." autocomplete="off" />
+        <ul id="result-list" class="list-group mt-2"></ul>
+    </div>
+  
+    <div class="mb-3">
+        <label for="date-input" class="form-label">Sana</label>
+        <input type="date" name="date" id="date-input" class="form-control" required />
+    </div>
+  
+    <button type="submit" class="btn btn-primary">Yuborish</button>
+</form>
+  
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    let timer = null;
+  
+    $('#search-input').on('input', function () {
+        clearTimeout(timer);
+        let query = $(this).val();
+  
+        timer = setTimeout(function () {
+            if (query.length > 0) {
+                $.get('/employee/search-employee/', { name: query })
+                    .done(function (data) {
+                        let list = $('#result-list');
+                        list.empty();
+                        if (Array.isArray(data.employees)) {
+                            data.employees.forEach((emp) => {
+                                list.append(`
+                                    <li class="list-group-item result-item" data-id="${emp.id}" data-name="${emp.name}">
+                                        ${emp.name} - ${emp.status}
+                                    </li>
+                                `);
+                            });
+                        } else {
+                            console.error('Invalid data format:', data);
+                        }
+                    })
+                    .fail(function (xhr, status, error) {
+                        console.error('Error fetching employees:', status, error);
+                        $('#result-list').empty();
+                    });
+            } else {
+                $('#result-list').empty();
+            }
+        }, 300);
+    });
+  
+    $('#result-list').on('click', '.result-item', function () {
+        const selectedName = $(this).data('name');
+        const selectedId = $(this).data('id');
+  
+        $('#search-input').val(selectedName);
+        $('#employee-id').val(selectedId);
+        $('#result-list').empty();
+    });
+  
+    // (Ixtiyoriy) inputdan tashqariga bosganda natijalar yashirish
+    $(document).on('click', function (e) {
+        if (!$(e.target).closest('#search-input, #result-list').length) {
+            $('#result-list').empty();
+        }
+    });
+</script>
+{% endblock content %}
