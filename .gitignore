@@ -136,6 +136,6 @@ employee/migrations/*
 !/employee/migrations/__init__.py
 
 account/migrations/*
-!/manager/migrations/__init__.py
+!/account/migrations/__init__.py
 
 venv/
