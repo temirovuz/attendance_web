@@ -59,7 +59,11 @@ class CheckOutForm(forms.Form):
         widget=forms.CheckboxSelectMultiple,
         label="employees",
     )
-   
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["employees"].label_from_instance = lambda obj: obj.employee.name + " - " + obj.employee.status
+
 
 class CheckingListForm(forms.Form):
     date = forms.DateField(
@@ -69,15 +73,12 @@ class CheckingListForm(forms.Form):
 
 class SalaryForm(forms.Form):
     start_date = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date"}), label="Start Date"
+        widget=forms.DateInput(attrs={"type": "date", "class": "form-control"}),
+        label="Start Date",
     )
     end_date = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date"}), label="End Date"
-    )
-    submit = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "submit", "value": "Submit"}),
-        required=False,
-        label="",
+        widget=forms.DateInput(attrs={"type": "date", "class": "form-control"}),
+        label="End Date",
     )
 
 

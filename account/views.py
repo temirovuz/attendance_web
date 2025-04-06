@@ -8,6 +8,8 @@ from account.models import CustomUser
 from employee.permissions import IsAdminUserAndAuthenticated
 from django.contrib.auth import logout
 
+from django.views.decorators.cache import never_cache
+from django.utils.decorators import method_decorator
 
 class RegisterView(View):
     def get(self, request):
@@ -16,18 +18,20 @@ class RegisterView(View):
 
     def post(self, request):
         form = UserRegistrationForm(request.POST)
-        
+
         if not form.is_valid():
             print(form.errors)  # Xatolarni tekshirish uchun
             return render(request, "register.html", {"form": form})
-        
+
         phone_number = form.cleaned_data["phone_number"]
         password = form.cleaned_data["password1"]
 
         # Agar user allaqachon mavjud bo‘lsa, yaratmaslik
         if CustomUser.objects.filter(phone_number=phone_number).exists():
             print("Bu telefon raqam allaqachon ro‘yxatdan o‘tgan.")
-            form.add_error("phone_number", "Bu telefon raqam allaqachon ro‘yxatdan o‘tgan.")
+            form.add_error(
+                "phone_number", "Bu telefon raqam allaqachon ro‘yxatdan o‘tgan."
+            )
             return render(request, "register.html", {"form": form})
 
         user = CustomUser(phone_number=phone_number)
@@ -60,11 +64,12 @@ class LoginView(View):
         return render(request, "login.html", {"form": form})
 
 
-class HomeView(IsAdminUserAndAuthenticated,View):
+class HomeView(IsAdminUserAndAuthenticated, View):
     def get(self, request):
         return render(request, "home.html")
 
 
+@method_decorator(never_cache, name="dispatch")
 class LogoutView(View):
     def get(self, request):
         logout(request)

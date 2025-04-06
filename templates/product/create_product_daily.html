@@ -1,28 +1,44 @@
 {% extends "base.html" %}
 
-{% block title %} Product daily{% endblock title %}
+{% block title %}Product Daily{% endblock title %}
 
 {% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <h2 class="mb-4 text-center">Create Product Daily</h2>
 
-<h1>Create Product daily </h1>
-<form method="post">
-    {% csrf_token %}
-    <div>
-        <label for="id_product">Product:</label>
-        <select name="product" id="product">
-            {% for product in products %}   
-                <option value="{{ product.id }}">{{ product.name }}</option>
-            {% endfor %}
-        </select>
+            <form method="post" class="p-4 border rounded shadow-sm bg-light">
+                {% csrf_token %}
+
+                <!-- Product select -->
+                <div class="mb-3">
+                    <label for="product" class="form-label">Product</label>
+                    <select name="product" id="product" class="form-select" required>
+                        <option value="">Select a product</option>
+                        {% for product in products %}
+                            <option value="{{ product.id }}">{{ product.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Date input -->
+                <div class="mb-3">
+                    <label for="date" class="form-label">Date</label>
+                    <input type="date" name="date" id="date" class="form-control" required>
+                </div>
+
+                <!-- Quantity input -->
+                <div class="mb-3">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="number" name="quantity" id="quantity" class="form-control" min="0" required>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <div>
-        <label for="id_date">Date:</label>
-        <input type="date" name="date" id="date">
-    </div>
-    <div>
-        <label for="id_quantity">Quantity:</label>
-        <input type="number" name="quantity" id="quantity">
-    </div>
-    <button type="submit">Submit</button>
-</form>
+</div>
 {% endblock content %}

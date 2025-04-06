@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-92v5@+e894&$g5ethucn*57yutmww9=7*1tii(p$z^y^yxs0o+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -47,9 +47,12 @@ MIDDLEWARE = [
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
-    # 'employee.middleware.LogoutRedirectMiddleware',
+    # 'core.middleware.LoginRequiredMiddleware',
+    'core.middleware.NoCacheMiddleware',
+    'core.middleware.LoginRequiredMiddleware',
 ]
 
+LOGIN_REDIRECT_URL = '/'
 ROOT_URLCONF = 'core.urls'
 
 CACHE_MIDDLEWARE_SECONDS = 0
@@ -125,3 +128,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_URL = '/account/login/'  # yoki sizda qanday bo‘lsa shunga mos

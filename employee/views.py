@@ -240,7 +240,6 @@ class CheckOutView(View):
     def get(self, request):
         queryset = Attendance.objects.filter(check_out__isnull=True)
         form = CheckOutForm()
-        print(queryset)
         return render(
             request, "attendance/check_out.html", {"form": form, "employees": queryset}
         )
@@ -379,7 +378,7 @@ class BrakingTimeView(View):
     def get(self, request):
         form = BreakTimeEmployeeForm()
         return render(request, "attendance/break_time.html", {"form": form})
-    
+
     def post(self, request):
         form = BreakTimeEmployeeForm(request.POST)
         if form.is_valid():
