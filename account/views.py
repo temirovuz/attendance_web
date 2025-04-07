@@ -11,6 +11,7 @@ from django.contrib.auth import logout
 from django.views.decorators.cache import never_cache
 from django.utils.decorators import method_decorator
 
+
 class RegisterView(View):
     def get(self, request):
         form = UserRegistrationForm()
@@ -42,7 +43,10 @@ class RegisterView(View):
 
 
 class LoginView(View):
+
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect("home")
         form = PhoneLoginForm()
         return render(request, "login.html", {"form": form})
 
