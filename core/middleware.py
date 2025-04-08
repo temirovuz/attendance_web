@@ -7,6 +7,7 @@ EXEMPT_URLS = [
     'account:logout',  # logout sahifa
     'admin:login',
     'admin:index',
+    'account:register',
 ]
 
 class LoginRequiredMiddleware:

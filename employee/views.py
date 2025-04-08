@@ -150,7 +150,9 @@ class ProductDailyCreate(View):
 class ProductDailyList(View):
     def get(self, request):
         form = ProductDailySelect()
-        return render(request, "product/product_daily_list.html", {"form": form})
+        print(datetime.now().date())
+        queryset = DailtyProduct.objects.filter(date=datetime.now().date())
+        return render(request, "product/product_daily_list.html", {"form": form, "product_dailys":queryset})
 
     def post(self, request):
         form = ProductDailySelect(request.POST)
@@ -246,8 +248,6 @@ class CheckOutView(View):
 
     def post(self, request):
         form = CheckOutForm(request.POST)
-        print(form.data)
-        print(form.is_valid())
         if form.is_valid():
             employees = form.cleaned_data.get("employees").values_list("id", flat=True)
             check_out = form.cleaned_data.get("check_out")
